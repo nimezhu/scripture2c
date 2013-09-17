@@ -1,4 +1,4 @@
 scripture2c
 ===========
 
-Scripture2C 
+Scripture2C is 

@@ -13,6 +13,13 @@ import broad.core.error.ParseException;
 import org.apache.commons.collections15.Predicate;
 import org.apache.commons.io.LineIterator;
 import net.sf.samtools.util.CloseableIterator;
+/**
+ * @version 0.1 
+ * @see
+ * improvement: automatic deflat gzip file by zhuxp
+ * 
+ *
+ */
 
 public class TabbedReader {
 

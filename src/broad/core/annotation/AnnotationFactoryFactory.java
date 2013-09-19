@@ -1,6 +1,5 @@
 package broad.core.annotation;
 
-import nextgen.core.annotation.Annotation;
 import nextgen.core.annotation.BasicAnnotation;
 import broad.core.error.ParseException;
 /*

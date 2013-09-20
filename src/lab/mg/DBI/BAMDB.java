@@ -86,8 +86,7 @@ public class BAMDB implements DB {
 	public CloseableIterator<SAMRecord> query(Annotation a) {
 		if ("contained".equalsIgnoreCase(method))
 		{
-			CloseableIterator<SAMRecord> iter= data.query(a.getChr(),a.getStart(), a.getEnd(), true);
-			return iter;
+			return queryContained(a);
 		}
 		else 
 		{
@@ -95,8 +94,26 @@ public class BAMDB implements DB {
 			return iter;
 		}
 	}
-
-	@Override
+    
+	/**
+	 * Query Fucntions
+     * Config: method = contained
+     * 
+     * @param a
+     * @return
+     */
+	private CloseableIterator<SAMRecord> queryContained(Annotation a) 
+	{
+		CloseableIterator<SAMRecord> iter= data.query(a.getChr(),a.getStart(), a.getEnd(), true);
+		return iter;
+	}
+	
+	
+	
+	
+	
+	
+    @Override
 	public CloseableIterator<SAMRecord> iterator() {
        return data.iterator();	
 	}

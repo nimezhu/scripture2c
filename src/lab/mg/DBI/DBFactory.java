@@ -31,6 +31,10 @@ public class DBFactory {
 		{
 		return new BAMDB(file,config);	
 		}
+		else if ("bam2".equalsIgnoreCase(format))
+		{
+			return new BAM2DB(file,config);
+		}
 		else if ("tabix".equalsIgnoreCase(format))
 		{
 		return new TabixDB(file,config);

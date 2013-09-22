@@ -9,8 +9,8 @@ import org.broad.igv.sam.Alignment;
 
 import broad.core.annotation.BasicGenomicAnnotation;
 import broad.core.annotation.LightweightGenomicAnnotation;
-import broad.core.math.Statistics;
-//Z simport broad.core.sequence.Extractor;
+//zort broad.core.math.Statistics;
+//Z import broad.core.sequence.Extractor;
 //Z import broad.core.sequence.Sequence;
 //Z import broad.pda.rnai.ExtractSequence;
 
@@ -75,11 +75,11 @@ public class Alignments extends BasicGenomicAnnotation {
 		if(strand){s=Strand.NEGATIVE;}
 		return s;
 	}
-
+/*RM BY ZHUXP
 	public Alignments(nextgen.core.alignment.Alignment record) {
 		this(record.getReferenceName(), record.getStart(), record.getEnd(), record.getOrientation(), record.getName());
 	}
-	
+	*/
 	
 	
 	/*************Might be bad************/

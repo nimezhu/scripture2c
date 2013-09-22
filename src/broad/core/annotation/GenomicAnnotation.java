@@ -4,7 +4,7 @@ import java.util.List;
 
 import nextgen.core.annotation.Annotation;
 
-import broad.core.sequence.Sequence;
+//import broad.core.sequence.Sequence;
 
 public interface GenomicAnnotation extends Cloneable ,Feature, LightweightGenomicAnnotation {
 	//String getDisplayName();
@@ -15,9 +15,11 @@ public interface GenomicAnnotation extends Cloneable ,Feature, LightweightGenomi
 	 * @return
 	 */
 	int getLength();
-	
-	Sequence getSequence();
-	void setSequence(Sequence seq);
+
+	//ZHUXP RM
+	//Sequence getSequence();
+	//void setSequence(Sequence seq);s
+	//END OF ZHUXP RM
 	public void setOrientation(String orientationString);
 	public Strand getOrientation();
 	

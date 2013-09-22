@@ -6,15 +6,18 @@ import java.util.Iterator;
 import java.util.List;
 
 import nextgen.core.annotation.Annotation;
+// RM BY ZHUXP
+//import broad.core.sequence.Sequence;
 
-import broad.core.sequence.Sequence;
+// ZHUXP: romove sequence part 
 
 public class BasicGenomicAnnotation extends BasicLightweightAnnotation implements GenomicAnnotation {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Sequence sequence;
+	//RM BY ZHUXP
+	//private Sequence sequence;
 	private int fivePrimerBuffer;
 	private int threePrimerBuffer;
 	private String id;
@@ -50,9 +53,11 @@ public class BasicGenomicAnnotation extends BasicLightweightAnnotation implement
 	
 	public BasicGenomicAnnotation(GenomicAnnotation ga) {
 		super(ga);
+		/*RM BY ZHUXP
 		setSequence(ga.getSequence());
 		fivePrimerBuffer = ga.getFivePrimeBases();
 		threePrimerBuffer = ga.getThreePrimeBases();
+		*/
 		id = ga.getId();
 	}
 	
@@ -260,13 +265,15 @@ public class BasicGenomicAnnotation extends BasicLightweightAnnotation implement
 	
 	public int lastIdxWhereListSearchBroke() { return lastBreakInIndex;}
 	
-
+/*ZHUXP RM
 	public Sequence getSequence() {
 		return sequence;
 	}
 	public void setSequence(Sequence sequence) {
 		this.sequence = sequence;
 	}
+END OF ZHUXP RM*/
+	
 	/*
 	public String getDisplayName() {
 		return displayName;

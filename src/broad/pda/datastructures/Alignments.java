@@ -10,13 +10,13 @@ import org.broad.igv.sam.Alignment;
 import broad.core.annotation.BasicGenomicAnnotation;
 import broad.core.annotation.LightweightGenomicAnnotation;
 import broad.core.math.Statistics;
-import broad.core.sequence.Extractor;
-import broad.core.sequence.Sequence;
-import broad.pda.rnai.ExtractSequence;
+//Z simport broad.core.sequence.Extractor;
+//Z import broad.core.sequence.Sequence;
+//Z import broad.pda.rnai.ExtractSequence;
 
 import nextgen.core.annotation.AbstractAnnotation;
 import nextgen.core.annotation.Annotation;
-import nextgen.core.annotation.Gene;
+//Z import nextgen.core.annotation.Gene;
 
 //import broad.pda.rnai.ExtractSequence;
 
@@ -86,7 +86,7 @@ public class Alignments extends BasicGenomicAnnotation {
 	public double getCountScore(){return this.countScore;}
 	
 	public List<Double> getScores() {return this.scores;}
-
+/* RM BY ZHUXPs
 	public String getSequence(Sequence chr, boolean repeatMask) throws Exception {
 		return ExtractSequence.getSequenceUnoriented(this, chr, repeatMask, new TreeMap());
 	}
@@ -94,7 +94,7 @@ public class Alignments extends BasicGenomicAnnotation {
 	public String getSequence(String genomeDir) throws Exception {
 		return ExtractSequence.getSequenceUnoriented(this, genomeDir, false, new TreeMap());
 	}
-
+*/
 	public void setCountScore(double score){this.countScore=score;}
 
 	public void setLine(String line){this.line=line;}

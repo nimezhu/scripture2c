@@ -15,7 +15,7 @@ import org.apache.log4j.Logger;
 import nextgen.core.general.TabbedReader;
 //import nextgen.core.scripture.BuildScriptureCoordinateSpace;
 
-import broad.pda.datastructures.Alignments;
+//import broad.pda.datastructures.Alignments;
 import broad.core.error.ParseException;
 
 
@@ -500,7 +500,7 @@ public class BasicAnnotation extends AbstractAnnotation implements java.io.Seria
 		throw new UnsupportedOperationException("TODO");
 	}
 
-
+/*Z
 	private Annotation split(int start, int end) {
 		return this.intersect(new Alignments(getChr(), start, end));
 		
@@ -508,8 +508,9 @@ public class BasicAnnotation extends AbstractAnnotation implements java.io.Seria
 		newInterval.setStart(start);
 		newInterval.setEnd(end);
 		Annotation rtrn=new BasicAnnotation(referenceName, newInterval, orientation, name);
-		return rtrn;*/
-	}
+		return rtrn;
+		*/
+//	}
 
 	@Override
 	public List<Annotation> disect(List<? extends Annotation> disectors) {

@@ -41,9 +41,10 @@ public class DBFactory {
 		{
 		return new TabixDB(file,config);
 		}
-		else if ("bed".equalsIgnoreCase(format))
+		else if ("txt".equalsIgnoreCase(format))
 		{
-			return new BinIndex(reader.read(file,"bed"),config);
+			
+			return new BinIndex(reader.read(file,(String)config.get("type")),config);
 		}
 		return null;
 	}

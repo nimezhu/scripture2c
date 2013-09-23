@@ -43,7 +43,7 @@ public class AnnotationFactoryFactory  {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public static Class StringToFormat(String annotationType)
+	public static Class StringToType(String annotationType)
 	{
 			if("BED".equalsIgnoreCase(annotationType)) {
 			return BED.class;

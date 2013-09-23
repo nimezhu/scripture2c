@@ -34,8 +34,8 @@ public String INPUT_FORMAT="guess";
 public String OUT="stdout";
 @Option(doc = "database file", shortName="d")
 public File DB_FILE;
-@Option(doc = "database format [tabix bam mem(interval tree in memory) or bigwig or 2bit", shortName="e")
-public String DB_FORMAT="guess";
+@Option(doc = "database format [tabix bam or bigwig or 2bit or txt]", shortName="e")
+public String DB_FORMAT="txt";
 @Option(doc = "query method interface", shortName="m")
 public String QR_METHOD=null;
 @Option(doc = "annotation type [bed or vcf or gff ...] interface", shortName="t")

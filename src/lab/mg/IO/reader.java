@@ -54,9 +54,9 @@ public static <T> CloseableIterator<T> read(File input,String format, String met
 	  iter = new SAMFileReader(input).iterator();
 	  
 	}
-	else
+	else  //default : txt; now format becomes type;
 	{	
-	iter = TabbedReader.read(input,AnnotationFactoryFactory.StringToFormat(format), AnnotationFactoryFactory.getFactory(format));
+	iter = TabbedReader.read(input,AnnotationFactoryFactory.StringToType(format), AnnotationFactoryFactory.getFactory(format));
 	}
 	return iter; 
  }

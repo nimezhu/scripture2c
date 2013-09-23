@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import broad.core.datastructures.Pair;
@@ -147,20 +148,27 @@ class BAMPairedEndIterator implements CloseableIterator<Pair<SAMRecord>>
 	private static final Logger logger = Logger
 			.getLogger(BAMPairedEndIterator.class);
 	private SAMFileReader data;
+	private  SAMFileReader data3;
 	private CloseableIterator<SAMRecord> iter;
 	private ArrayList<String> bufferReadsList;
 	private HashMap<String,Pair<SAMRecord>> bufferPairReads; // the reads who haven't be report yet. 
 	private HashMap<String, Integer> reported; //in case buffer is out of memory dump by searching the mate in bam file
 	private Pair<SAMRecord> curr; //current
-	private static int MAXBUFFERREADS=100000; // max buffer reads.
+	private static int MAXBUFFERREADS=500000; // max buffer reads.
 	
+	
+	private long startTime; //debug
 	public BAMPairedEndIterator(SAMFileReader data, SAMRecordIterator iter) {
+		logger.setLevel(Level.WARN);
+		logger.debug("init iter");
+		long startTime = System.currentTimeMillis(); 
 		this.data=data;
 		this.iter=iter;
 		bufferReadsList = new ArrayList<String>();
 		bufferPairReads = new HashMap<String,Pair<SAMRecord>>();
 		reported = new HashMap<String,Integer>();
 		advance();
+		//debug
 	}
 	/**
 	 *  make sure that curr has value2 ?
@@ -171,6 +179,7 @@ class BAMPairedEndIterator implements CloseableIterator<Pair<SAMRecord>>
 		//logger.info(bufferPairReads.size());
 		while(iter.hasNext())
 		{
+			
 		// if there are two much buffer 
 		 if (bufferReadsList.size() > MAXBUFFERREADS)
 		 {
@@ -186,8 +195,9 @@ class BAMPairedEndIterator implements CloseableIterator<Pair<SAMRecord>>
 		 else
 		 {	
 			SAMRecord sam=iter.next();
-			
-		    String readName=strip_mate_id(sam.getReadName());
+			logger.debug("reading next;");
+		    logger.debug(System.currentTimeMillis()-startTime);
+			String readName=strip_mate_id(sam.getReadName());
 		    //if has been reported
 		    if (reported.containsKey(readName))
 		    {
@@ -198,6 +208,8 @@ class BAMPairedEndIterator implements CloseableIterator<Pair<SAMRecord>>
 		    {	
 		    if (!bufferPairReads.containsKey(readName))
 			{	
+		    logger.debug("getting a mate1");
+		    logger.debug(System.currentTimeMillis()-startTime);
 			Pair<SAMRecord> pair=new Pair<SAMRecord>();
 		    pair.setValue1(sam);
 			bufferReadsList.add(readName);
@@ -205,21 +217,23 @@ class BAMPairedEndIterator implements CloseableIterator<Pair<SAMRecord>>
 			}
 			else
 			{
+				logger.debug("getting a mate2");
+			    logger.debug(System.currentTimeMillis()-startTime);
 				bufferPairReads.get(readName).setValue2(sam);
 			}
 		    }
 		 }	
 		 
-		 
 		 if (bufferPairReads.get(bufferReadsList.get(0)).hasValue2())
-		 {
-			
-			 curr=bufferPairReads.get(bufferReadsList.get(0));
-			 bufferPairReads.remove(bufferReadsList.get(0));
-			 bufferReadsList.remove(0);
-			 return;
-			
-		 }
+			 {
+				
+				 curr=bufferPairReads.get(bufferReadsList.get(0));
+				 bufferPairReads.remove(bufferReadsList.get(0));
+				 bufferReadsList.remove(0);
+				 return;
+				
+			 }
+		 
 		}
 		
 		// out of iterator list. 
@@ -232,10 +246,15 @@ class BAMPairedEndIterator implements CloseableIterator<Pair<SAMRecord>>
 		else
 		{
 			SAMRecord a = bufferPairReads.get(bufferReadsList.get(0)).getValue1();
-		    SAMRecord b = data.queryMate(a);	
+		    SAMRecord b = data.queryMate(a);
+		 	logger.debug("getting mate2 in file");
+		    logger.debug(System.currentTimeMillis()-startTime);
+			   
 			curr=new Pair<SAMRecord>(a,b);
+			reported.put(strip_mate_id(a.getReadName()), 1);
 			bufferPairReads.remove(bufferReadsList.get(0));
 			bufferReadsList.remove(0);
+		
 		}
 		
 		

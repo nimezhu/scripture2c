@@ -51,7 +51,7 @@ public static <T> CloseableIterator<T> read(File input,String format, String met
 	CloseableIterator iter=null;
 	if ("BAM".equalsIgnoreCase(format))
 	{	
-	  iter = new SAMFileReader(input).iterator();
+	  iter = new SAMFileReader(input).iterator(); //convert to annotation?
 	  
 	}
 	else  //default : txt; now format becomes type;

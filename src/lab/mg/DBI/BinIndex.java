@@ -174,7 +174,7 @@ public class BinIndex<T extends Annotation> implements DB<T> {
 	@Override
 	public CloseableIterator<T> iterator() {
 		// TODO Auto-generated method stub!! TODO!!!
-		return null;
+		return new Ite();
 	}
 
 
@@ -191,7 +191,94 @@ public class BinIndex<T extends Annotation> implements DB<T> {
 		return config;
 	};	
 	
-	
+	private class Ite implements CloseableIterator<T>
+	{
+
+		private String[] chrs;
+		private Integer bins;
+		private int iChr;
+		private T curr;
+		private int iBin;
+		private int iList;
+		public Ite()
+		{
+			chrs=data.keySet().toArray(new String[data.keySet().size()]);
+			Arrays.sort(chrs);
+			curr=null;
+			if(chrs.length==0)
+			{
+				return;
+			}
+			else
+			{
+				iChr=0;
+				iBin=0;
+				iList=-1;
+			}
+			advance();
+		}
+		private void advance()
+		{
+			T a=null;
+			while(true)
+			{
+			if (iChr >= chrs.length)
+			{
+				a=null;break;
+			}
+			a=readNextInBin();
+			if (a==null)
+					{
+			         iChr++;
+			         iList=-1;
+			         iBin=0;
+					}
+			else break;
+			
+			}
+			curr=a;
+		}
+		private T readNextInBin() //read next in bin, no need to be overlapping
+		{
+			iList++;
+			if (iBin >= binLength) return null;
+
+			while(iList>data.get(chrs[iChr]).get(iBin).size()-1)
+			{
+				iBin++;
+				if (iBin >= binLength) return null;
+			    iList=0;	
+			}
+			return data.get(chrs[iChr]).get(iBin).get(iList);
+			
+			
+		}
+		@Override
+		public boolean hasNext() {
+			if (curr==null) return false;
+			return true;
+		}
+
+		@Override
+		public T next() {
+			T a=curr;
+			advance();
+			return a;
+		}
+
+		@Override
+		public void remove() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void close() {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 
 	private class Query implements CloseableIterator<T>
 	{

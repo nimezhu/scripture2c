@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+import lab.mg.IO.reader;
+
 /**
  *  Created on 2013-9-18  
  *  
@@ -38,6 +40,10 @@ public class DBFactory {
 		else if ("tabix".equalsIgnoreCase(format))
 		{
 		return new TabixDB(file,config);
+		}
+		else if ("bed".equalsIgnoreCase(format))
+		{
+			return new BinIndex(reader.read(file,"bed"),config);
 		}
 		return null;
 	}

@@ -90,7 +90,7 @@ public class BAMDB implements DB {
 		}
 		else 
 		{
-			CloseableIterator<SAMRecord> iter= data.query(a.getChr(),a.getStart(), a.getEnd(), false);
+			CloseableIterator<SAMRecord> iter= data.query(a.getChr(),a.getSAMStart(), a.getSAMEnd(), false);
 			return iter;
 		}
 	}

@@ -92,7 +92,7 @@ public class BAM2DB implements DB<Pair<SAMRecord>> {
 	 *               
 	 */
 	public CloseableIterator<Pair<SAMRecord>> query(Annotation a) {
-			BAMPairedEndIterator iter= new BAMPairedEndIterator(data,data2.query(a.getChr(),a.getStart(), a.getEnd(), false));  //is this memory consuming?
+			BAMPairedEndIterator iter= new BAMPairedEndIterator(data,data2.query(a.getChr(),a.getSAMStart(), a.getSAMEnd(), false));  //is this memory consuming?
 			
 			return iter;
 	}

@@ -66,6 +66,14 @@
                 <attribute name="Main-Class" value="lab.mg.demo.xQuery"/>
             </manifest>
         </jar>
+        
+        <jar destfile="${dist.dir}/xQueryBAM2.jar" basedir="${build.dir}">
+            <zipgroupfileset dir="lib" includes="*.jar"/>
+            <manifest>
+                 <attribute name="Implementation-Version" value="0.02" />
+                <attribute name="Main-Class" value="lab.mg.demo.xQueryBAM2"/>
+            </manifest>
+        </jar>
 </target>
 
 <target name="clean">

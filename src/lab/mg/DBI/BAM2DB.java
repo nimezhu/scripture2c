@@ -161,7 +161,7 @@ class BAMPairedEndIterator implements CloseableIterator<Pair<SAMRecord>>
 	public BAMPairedEndIterator(SAMFileReader data, SAMRecordIterator iter) {
 		logger.setLevel(Level.WARN);
 		logger.debug("init iter");
-		long startTime = System.currentTimeMillis(); 
+		startTime = System.currentTimeMillis(); 
 		this.data=data;
 		this.iter=iter;
 		bufferReadsList = new ArrayList<String>();
@@ -195,6 +195,7 @@ class BAMPairedEndIterator implements CloseableIterator<Pair<SAMRecord>>
 		 else
 		 {	
 			SAMRecord sam=iter.next();
+			//if (sam.getMappingQuality()==0) continue;
 			logger.debug("reading next;");
 		    logger.debug(System.currentTimeMillis()-startTime);
 			String readName=strip_mate_id(sam.getReadName());
@@ -224,6 +225,7 @@ class BAMPairedEndIterator implements CloseableIterator<Pair<SAMRecord>>
 		    }
 		 }	
 		 
+		 
 		 if (bufferPairReads.get(bufferReadsList.get(0)).hasValue2())
 			 {
 				
@@ -242,8 +244,17 @@ class BAMPairedEndIterator implements CloseableIterator<Pair<SAMRecord>>
 		 {
 			curr=null;
 		 }
+		else if (bufferPairReads.get(bufferReadsList.get(0)).hasValue2())
+		 {
+			
+			 curr=bufferPairReads.get(bufferReadsList.get(0));
+			 bufferPairReads.remove(bufferReadsList.get(0));
+			 bufferReadsList.remove(0);
+			 return;
+			
+		 }
 		
-		else
+		else 
 		{
 			SAMRecord a = bufferPairReads.get(bufferReadsList.get(0)).getValue1();
 		    SAMRecord b = data.queryMate(a);

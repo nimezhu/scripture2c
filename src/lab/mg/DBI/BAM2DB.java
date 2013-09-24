@@ -175,6 +175,17 @@ class BAMPairedEndIterator implements CloseableIterator<Pair<SAMRecord>>
 	 */
 	private void advance()  
 	{
+		
+		// First , test if there are a pair
+		if (bufferReadsList.size() > 0 && bufferPairReads.get(bufferReadsList.get(0)).hasValue2())
+		 {
+			
+			 curr=bufferPairReads.get(bufferReadsList.get(0));
+			 bufferPairReads.remove(bufferReadsList.get(0));
+			 bufferReadsList.remove(0);
+			 return;
+			
+		 }
 		//if end?
 		//logger.info(bufferPairReads.size());
 		while(iter.hasNext())
@@ -244,16 +255,6 @@ class BAMPairedEndIterator implements CloseableIterator<Pair<SAMRecord>>
 		 {
 			curr=null;
 		 }
-		else if (bufferPairReads.get(bufferReadsList.get(0)).hasValue2())
-		 {
-			
-			 curr=bufferPairReads.get(bufferReadsList.get(0));
-			 bufferPairReads.remove(bufferReadsList.get(0));
-			 bufferReadsList.remove(0);
-			 return;
-			
-		 }
-		
 		else 
 		{
 			SAMRecord a = bufferPairReads.get(bufferReadsList.get(0)).getValue1();

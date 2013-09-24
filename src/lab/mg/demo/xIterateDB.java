@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import lab.mg.DBI.DB;
 import lab.mg.DBI.DBFactory;
-import lab.mg.IO.reader;
+import lab.mg.IO.Reader;
 
 
 import broad.core.annotation.AnnotationFactoryFactory;

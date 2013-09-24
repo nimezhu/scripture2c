@@ -4,7 +4,7 @@ package lab.mg.demo;
 import java.io.File;
 import java.io.IOException;
 
-import lab.mg.IO.reader;
+import lab.mg.IO.Reader;
 
 
 import broad.core.annotation.AnnotationFactoryFactory;
@@ -42,7 +42,7 @@ protected int doWork() {
 	
 	try {
 //		CloseableIterator t =  TabbedReader.read(INPUT,AnnotationFactoryFactory.StringToFormat(FORMAT), AnnotationFactoryFactory.getFactory(FORMAT)) ;
-	CloseableIterator t = reader.read(INPUT,FORMAT);	
+	CloseableIterator t = Reader.read(INPUT,FORMAT);	
 	   while(t.hasNext())
 	   {
 		   System.out.println(t.next());

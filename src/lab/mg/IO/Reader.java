@@ -32,7 +32,7 @@ import nextgen.core.general.TabbedReader;
 
 
 
-public class reader {
+public class Reader {
 
 public static Class StringToClass(String s)
 {

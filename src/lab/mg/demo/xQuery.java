@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 import lab.mg.DBI.DBFactory;
 import lab.mg.DBI.DB;
-import lab.mg.IO.reader;
+import lab.mg.IO.Reader;
 
 import net.sf.picard.cmdline.CommandLineProgram;
 import net.sf.picard.cmdline.Option;
@@ -93,7 +93,7 @@ protected int doWork() {
 	 * Query
 	 */
 	try {
-	CloseableIterator t = reader.read(INPUT,INPUT_TYPE);	
+	CloseableIterator t = Reader.read(INPUT,INPUT_TYPE);	
 	   while(t.hasNext())
 	   {
 		   Object a=t.next();

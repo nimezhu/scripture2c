@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-import lab.mg.IO.reader;
+import lab.mg.IO.Reader;
 
 /**
  *  Created on 2013-9-18  
@@ -44,7 +44,7 @@ public class DBFactory {
 		else if ("txt".equalsIgnoreCase(format))
 		{
 			
-			return new BinIndex(reader.read(file,(String)config.get("type")),config);
+			return new BinIndex(Reader.read(file,(String)config.get("type")),config);
 		}
 		return null;
 	}

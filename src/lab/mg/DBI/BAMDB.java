@@ -104,7 +104,7 @@ public class BAMDB implements DB {
      */
 	private CloseableIterator<SAMRecord> queryContained(Annotation a) 
 	{
-		CloseableIterator<SAMRecord> iter= data.query(a.getChr(),a.getStart(), a.getEnd(), true);
+		CloseableIterator<SAMRecord> iter= data.query(a.getChr(),a.getSAMStart(), a.getSAMEnd(), true);
 		return iter;
 	}
 	

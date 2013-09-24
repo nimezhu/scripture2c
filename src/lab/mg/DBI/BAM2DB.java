@@ -294,7 +294,8 @@ class BAMPairedEndIterator implements CloseableIterator<Pair<SAMRecord>>
 
 	@Override
 	public Pair<SAMRecord> next() {
-		Pair<SAMRecord> retv = new Pair<SAMRecord>(curr.getValue1(),curr.getValue2());
+		//Pair<SAMRecord> retv = new Pair<SAMRecord>(curr.getValue1(),curr.getValue2());
+		Pair<SAMRecord> retv = curr;
 		advance();
 		return retv;
 	}

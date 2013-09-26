@@ -110,7 +110,7 @@ protected int doWork() {
 			   if (lab.mg.turing.Utils.compatibleWithGene(a, sam))
 			   {
 				   out.println("CT\t");
-				   out.println(Arrays.toString(lab.mg.turing.Utils.translateToRNACoordinates(sam, a)));
+				   out.println(Arrays.toString(lab.mg.turing.Utils.translateToGeneCoordinates(sam, a)));
 				   out.print(sam.getSAMString());
 			   }
 			   else

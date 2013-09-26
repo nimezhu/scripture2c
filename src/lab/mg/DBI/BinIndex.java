@@ -13,9 +13,17 @@ import nextgen.core.annotation.Annotation;
 import org.apache.log4j.Logger;
 
 /**
- *  Created on 2013-9-22  
+ *  Created on 2013-9-22 <br> 
+ *
+ *  BinIndex DB<br>
+ *  reading annotation file into BinIndex data structure for query.
+ *  @author zhuxp 
+ *  @see
+ *   - Definition of Bin Indexing System<br>
+ *  http://genomewiki.ucsc.edu/index.php/Bin_indexing_system
+ *  @usage 
+ *  Please use DBI.init interface.
  *  
- *  TODO: need to implement iterator()!.
  */
 
 public class BinIndex<T extends Annotation> implements DB<T> {
@@ -173,7 +181,6 @@ public class BinIndex<T extends Annotation> implements DB<T> {
 
 	@Override
 	public CloseableIterator<T> iterator() {
-		// TODO Auto-generated method stub!! TODO!!!
 		return new Ite();
 	}
 

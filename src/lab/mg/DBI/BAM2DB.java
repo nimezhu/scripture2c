@@ -24,11 +24,10 @@ import nextgen.core.annotation.Annotation;
  * simple dbi for paired end bam file .
  * dbi demonstration. 
  * @author zhuxp
- * Example:
- *  @see
- *  How to init database:
- *  Please use interface in DBFactory.
- *  
+ * @see
+ *  How to init database:<br>
+ *  Please use interface in DBFactory.<br>
+ *  <pre>
  *  HashMap config=new HashMap();
  *  DB db = DBFacotry.init(file,"bam2",config);
  *  
@@ -39,16 +38,18 @@ import nextgen.core.annotation.Annotation;
  *  {
  *     print iter.next();
  *  }  
+ *  </pre>
+ *  
+ *  Config Options Update:<br>
+ *  
+ *  @TODO<br>
  *  
  *  
- *  Config Options Update:
+ *  @LOG<br>
  *  
- *  TODO:
- *  
- *  
- *  LOG:
- *  
- *  BUG:
+ *  @BUG<br>
+ *  Multi hits paired end reads might be paired self , 
+ *  since it has the same name and repeat twice in region due to the mate have two or more hits on genome.
  *  
  */
 
@@ -159,7 +160,7 @@ class BAMPairedEndIterator implements CloseableIterator<Pair<SAMRecord>>
 	
 	private long startTime; //debug
 	public BAMPairedEndIterator(SAMFileReader data, SAMRecordIterator iter) {
-		logger.setLevel(Level.WARN);
+		logger.setLevel(Level.INFO);
 		logger.debug("init iter");
 		startTime = System.currentTimeMillis(); 
 		this.data=data;
@@ -258,8 +259,15 @@ class BAMPairedEndIterator implements CloseableIterator<Pair<SAMRecord>>
 		else 
 		{
 			SAMRecord a = bufferPairReads.get(bufferReadsList.get(0)).getValue1();
-		    SAMRecord b = data.queryMate(a);
-		 	logger.debug("getting mate2 in file");
+		    SAMRecord b = null;
+			try {
+			b = data.queryMate(a);
+			}
+			catch(Exception e)
+			{
+				logger.info("Exception"+e.toString());
+			}
+			logger.debug("getting mate2 in file");
 		    logger.debug(System.currentTimeMillis()-startTime);
 			   
 			curr=new Pair<SAMRecord>(a,b);

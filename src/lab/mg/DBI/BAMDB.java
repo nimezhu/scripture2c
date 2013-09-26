@@ -17,34 +17,32 @@ import nextgen.core.annotation.Annotation;
  * simple dbi for bam file .
  * dbi demonstration. 
  * @author zhuxp
- * Example:
- *  @see
- *  How to init database:
- *  Please use interface in DBFactory.
+ * @see
+ * Example:<br>
+ *  How to init database:<br>
+ *  Please use interface in DBFactory.<br>
  *  
- *  HashMap config=new HashMap();
- *  config.put("method","contained");
- *  DB db = DBFacotry.init(file,"bam",config);
+ *  HashMap config=new HashMap();<br>
+ *  config.put("method","contained");<br>
+ *  DB db = DBFacotry.init(file,"bam",config);<br>
  *  
- *  Query
- *  Annotation a;
+ *  Query<br>
+ *  Annotation a;<br>
+ *  <pre>
  *  CloseableIterator iter=db.query(a);
  *  while(iter.hasNext())
  *  {
  *     print iter.next();
  *  }  
- *  
+ *  </pre>
  *  
  *  Config Options Update:
- *  "method":"contained"
+ *  "method":"contained"<br>
  *  
- *  TODO:
- *  
- *  "method?":"paired end"
- *  
- *  LOG:
- *  
- *  BUG:
+ *  TODO:<br>
+ *  "method?":"paired end"<br>
+ *  LOG:<br>
+ *  BUG:<br>
  *  
  */
 

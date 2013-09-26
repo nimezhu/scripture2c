@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.HashMap;
 
+import broad.core.annotation.BED;
 import broad.core.datastructures.Pair;
 
 import lab.mg.DBI.DBFactory;
@@ -129,10 +131,34 @@ protected int doWork() {
 			   }
 			   else if (OUTPUT_FORMAT==0)
 			   {   
-			   out.print("HT\tFIRST\t");
+			   if (firstMate != null)
+			   {
+			   if (lab.mg.turing.Utils.compatibleWithGene((BED)a, firstMate))
+			   {
+			   out.print("CT\tFIRST\t");
 			   out.print(firstMate.getSAMString());
-			   out.print("HT\tSECOND\t");
-			   out.print(secondMate.getSAMString());
+			   out.println(Arrays.toString(lab.mg.turing.Utils.translateToGeneCoordinates(firstMate, (BED)a)));
+			   }
+			   else
+			   {
+				   out.print("NC\tFIRST\t");
+				   out.print(firstMate.getSAMString());
+			   }
+			   }
+			   if (secondMate != null)
+			   {	   
+				   if (lab.mg.turing.Utils.compatibleWithGene((BED)a, secondMate))
+				   {
+				   out.print("CT\tSECOND\t");
+				   out.print(secondMate.getSAMString());
+				   out.println(Arrays.toString(lab.mg.turing.Utils.translateToGeneCoordinates(secondMate, (BED)a)));
+				   }
+				   else
+				   {
+					   out.print("NC\tSECOND\t");
+					   out.print(secondMate.getSAMString());
+				   }
+			   }
 			   }
 			   else if (OUTPUT_FORMAT==2)
 			   {

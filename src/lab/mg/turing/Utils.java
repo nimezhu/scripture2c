@@ -27,7 +27,7 @@ public class Utils {
 	}
 	public static boolean compatibleWithGene(BED gene, SAMRecord sam)
 	{
-		logger.setLevel(Level.DEBUG);
+		logger.setLevel(Level.WARN);
 		
 		if (!gene.getChr().equalsIgnoreCase(sam.getReferenceName())) return false; // if not in same chromosome
 		
@@ -124,7 +124,7 @@ public class Utils {
 	public static String[] translateToGeneCoordinates(SAMRecord read,BED gene)
 
 	{
-        logger.setLevel(Level.DEBUG);
+        logger.setLevel(Level.WARN);
 		
 		if (!gene.getChr().equalsIgnoreCase(read.getReferenceName())) return null; // if not in reade chromosome
 		
@@ -245,7 +245,7 @@ public class Utils {
 public static String[] translateToGeneCoordinates(BED read,BED gene)
 
 {
-    logger.setLevel(Level.DEBUG);
+    logger.setLevel(Level.WARN);
 	
 	if (!gene.getChr().equalsIgnoreCase(read.getChr())) return null; // if not in reade chromosome
 	

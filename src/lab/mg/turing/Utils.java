@@ -71,129 +71,17 @@ public class Utils {
 		TuringCodes  turingCodes=new TuringCodes(gene.getChr());
 		turingCodes.add(gene,1);
 		turingCodes.add(read,2);
-		TuringState state = new  TuringState(0,0,new int[16]);
-		/**
-		 *   A SIMPLE Turing Machine To Translate the Coordinates.
-		 *   tid: useless
-		 *   pos: useless
-		 *   
-		 *   registers[4];
-		 *      REGISTERS[0]: LAST_GENE POS
-		 *      REGISTERS[1]: GENE ON OR OFF
-		 *      
-		 *      REGISTERS[2]: LAST READS POS
-		 *      REGISTERS[3]: READS ON OR OFF
-		 *      
-		 *      REGISTERS[4]: GENE cDNA LENGTH COUNTER
-		 *      
-		 *      REGISTERS[5]: READ LENGTH COUNTER 
-		 *      
-		 *       
-		 *      REGISTERS[6]: READ START 
-		 *      REGISTERS[7]: READ END
-		 *  Priorty: gene > read
-		 *           end > block_end
-		 *           
-		 *  Version: TEST.
-		 *  
-		 *  
-		 */
-		for(TuringCode i : turingCodes)
-		{
-	    logger.debug(i);
-		switch(i.getCode())
-		{//CODE
-		
-		case(1): //CODE IS GENE
-			    logger.debug("in 1");
-				switch(i.getBit()) 
-				{
-		        case TuringCodeBook.BLOCK_START:
-					        state.registers[1]=1;
-					        logger.debug("gene block start");
-					        state.registers[0]=i.getPos();
-					        break;
-				case TuringCodeBook.BLOCK_END:
-					        state.registers[1]=0;
-					        logger.debug("gene block end");
-					        state.registers[4]+=i.getPos()-state.registers[0];
-					        state.registers[0]=i.getPos();
-				           break; 
-				}
-				break;
-	   case(2):
-			    logger.debug("in 2");
-				switch(i.getBit())
-				{
-				case TuringCodeBook.START:
-					int start_pos=state.registers[4]+i.getPos()-state.registers[0];
-					state.registers[6] = start_pos;
-					break;
-				case TuringCodeBook.BLOCK_START:
-				        	 logger.info("read block start"); 
-				        	 state.registers[3]=1;
-				        	 state.registers[2]=i.getPos();
-				        	 break;
-					
-				case TuringCodeBook.BLOCK_END:
-				        	logger.info("read block end"); 
-					        state.registers[3]=0;
-					        state.registers[5]+=i.getPos()-state.registers[2];
-			        	    state.registers[2]=i.getPos();
-					        break;
-				case TuringCodeBook.END: //END has prioroty .
-					
-                    int end_pos = state.registers[4]+i.getPos()-state.registers[0];
-                    state.registers[7]=end_pos;
-					logger.info("read END");
-					break;
-				} 
-				break;
-		}//CODE
-
-		}//FOR
-		
-		int start=state.registers[6];
-		int end=state.registers[7];
-		int length=state.registers[4];
-		
-		int rlen=state.registers[5];
-		if (gene.isNegativeStrand()) 
-		{
-			String[] retv = {gene.getName(),Integer.toString(length-end),Integer.toString(length-start),read.getReadName(),Integer.toString(rlen)};
+		int[] coords=translateCoordinates(turingCodes,gene.isNegativeStrand());
+			String[] retv = {gene.getName(),Integer.toString(coords[0]),Integer.toString(coords[1]),read.getReadName()};
 		   return retv;
-		}
-		else
-		{
-			 String[] retv = {gene.getName(),Integer.toString(start),Integer.toString(end),read.getReadName(),Integer.toString(rlen)};
-		   return retv;
-		}
+		
 }
 
 		
 
-
-/**
- * TEST  
- * @param read
- * @param gene
- * @return
- */
-public static String[] translateToGeneCoordinates(BED read,BED gene)
-
+private static int[] translateCoordinates(TuringCodes turingCodes,boolean isNegativeStrand)
 {
-    logger.setLevel(Level.WARN);
-	
-	if (!gene.getChr().equalsIgnoreCase(read.getChr())) return null; // if not in reade chromosome
-	
-	
-	// TODO : add Strand Filter
-	// IF NOT SAME STRAND : Return false;
-	
-	TuringCodes  turingCodes=new TuringCodes(gene.getChr());
-	turingCodes.add(gene,1);
-	turingCodes.add(read,2);
-	TuringState state = new  TuringState(0,0,new int[16]);
+	int[] results = new int[2];
 	/**
 	 *   A SIMPLE Turing Machine To Translate the Coordinates.
 	 *   tid: useless
@@ -220,53 +108,66 @@ public static String[] translateToGeneCoordinates(BED read,BED gene)
 	 *  
 	 *  
 	 */
+	TuringState state = new  TuringState(0,0,new int[16]);
+	final int GENE = 1;
+	final int READ = 2;
+	final int GENE_BLOCK_ON=1;
+	final int GENE_POS=0;
+	final int READ_BLOCK_ON=3;
+	final int READ_POS=2;
+	final int GENE_LENGTH_COUNTER=4;
+	final int READ_LENGTH_COUNTER=5;
+	final int READ_START=6;
+	final int READ_END=7;
+	
+	
 	for(TuringCode i : turingCodes)
 	{
     logger.debug(i);
 	switch(i.getCode())
 	{//CODE
 	
-	case(1): //CODE IS GENE
+	case(GENE): //CODE IS GENE
 		    logger.debug("in 1");
 			switch(i.getBit()) 
 			{
 	        case TuringCodeBook.BLOCK_START:
-				        state.registers[1]=1;
+				        state.registers[GENE_BLOCK_ON]=1;
 				        logger.debug("gene block start");
-				        state.registers[0]=i.getPos();
+				        state.registers[GENE_POS]=i.getPos();
 				        break;
 			case TuringCodeBook.BLOCK_END:
-				        state.registers[1]=0;
+				        state.registers[GENE_BLOCK_ON]=0;
 				        logger.debug("gene block end");
-				        state.registers[4]+=i.getPos()-state.registers[0];
-				        state.registers[0]=i.getPos();
+				        state.registers[GENE_LENGTH_COUNTER]+=i.getPos()-state.registers[GENE_POS];
+				        state.registers[GENE_POS]=i.getPos();
 			           break; 
 			}
 			break;
-   case(2):
+   case(READ):
 		    logger.debug("in 2");
 			switch(i.getBit())
 			{
 			case TuringCodeBook.START:
-				int start_pos=state.registers[4]+i.getPos()-state.registers[0];
-				state.registers[6] = start_pos;
+				int start_pos=state.registers[GENE_LENGTH_COUNTER]+i.getPos()-state.registers[GENE_POS];
+				state.registers[READ_START] = start_pos;
 				break;
 			case TuringCodeBook.BLOCK_START:
 			        	 logger.info("read block start"); 
-			        	 state.registers[3]=1;
-			        	 state.registers[2]=i.getPos();
+			        	 state.registers[READ_BLOCK_ON]=1;
+			        	 state.registers[READ_POS]=i.getPos();
 			        	 break;
 				
 			case TuringCodeBook.BLOCK_END:
 			        	logger.info("read block end"); 
-				        state.registers[3]=0;
-				        state.registers[5]+=i.getPos()-state.registers[2];
-		        	    state.registers[2]=i.getPos();
+				        state.registers[READ_BLOCK_ON]=0;
+				        state.registers[READ_LENGTH_COUNTER]+=i.getPos()-state.registers[READ_POS];
+		        	    state.registers[READ_POS]=i.getPos();
 				        break;
 			case TuringCodeBook.END: //END has prioroty .
 				
-                int end_pos = state.registers[4]+i.getPos()-state.registers[0];
-                state.registers[7]=end_pos;
+                int end_pos = state.registers[GENE_LENGTH_COUNTER]+i.getPos()-state.registers[GENE_POS];
+                state.registers[READ_END]=end_pos;
 				logger.info("read END");
 				break;
 			} 
@@ -274,21 +175,42 @@ public static String[] translateToGeneCoordinates(BED read,BED gene)
 	}//CODE
 
 	}//FOR
-	
-	int start=state.registers[6];
-	int end=state.registers[7];
-	int length=state.registers[4];
-	int rlen=state.registers[5];
-	if (gene.isNegativeStrand()) 
+	if(isNegativeStrand)
 	{
-		String[] retv = {gene.getName(),Integer.toString(length-end),Integer.toString(length-start),read.getName(),Integer.toString(rlen)};
-	   return retv;
+		results[0]=state.registers[GENE_LENGTH_COUNTER]-state.registers[READ_END];
+		results[1]=state.registers[GENE_LENGTH_COUNTER]-state.registers[READ_START];
 	}
 	else
 	{
-		 String[] retv = {gene.getName(),Integer.toString(start),Integer.toString(end),read.getName(),Integer.toString(rlen)};
-	   return retv;
+	results[0]=state.registers[READ_START];
+	results[1]=state.registers[READ_END];
 	}
+	return results;
+}
+/**
+ * TEST  
+ * @param read
+ * @param gene
+ * @return
+ */
+public static String[] translateToGeneCoordinates(BED read,BED gene)
+
+{
+    logger.setLevel(Level.WARN);
+	
+	if (!gene.getChr().equalsIgnoreCase(read.getChr())) return null; // if not in reade chromosome
+	
+	
+	// TODO : add Strand Filter
+	// IF NOT SAME STRAND : Return false;
+	
+	TuringCodes  turingCodes=new TuringCodes(gene.getChr());
+	turingCodes.add(gene,1);
+	turingCodes.add(read,2);
+	int[] coords=translateCoordinates(turingCodes,gene.isNegativeStrand());
+	String[] retv = {gene.getName(),Integer.toString(coords[0]),Integer.toString(coords[1]),read.getName()};
+   return retv;
+	
     }
 
 

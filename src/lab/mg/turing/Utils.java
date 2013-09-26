@@ -64,62 +64,47 @@ public class Utils {
 		switch(i.getCode())
 		{//CODE
 		
-		case(1):{ //CODE IS GENE
+		case(1): //CODE IS GENE
 			    logger.debug("in 1");
 				switch(i.getBit()) 
 				{
 				case TuringCodeBook.BLOCK_START:
-				           {
 					        state.registers[1]=1;
 					        logger.debug("gene block start");
 					        state.registers[0]=i.getPos();
 					        break;
-				           }
-					
 				case TuringCodeBook.BLOCK_END:
-				          {
 					        state.registers[1]=0;
 					        logger.debug("gene block end");
 					        state.registers[0]=i.getPos();
 				           break; 
-				          }
 				}
 		        break;
-		}
+		
 	   case(2):
-	   {     
-	
 			    logger.debug("in 2");
 				switch(i.getBit()){ 
 				case TuringCodeBook.BLOCK_START:
-				           {
 				        	 logger.info("read block start"); 
 				        	 if (state.registers[1]==0) { logger.debug("case 1");return false;} // gene is off but start a read
 				             if (state.registers[1]==1 && state.registers[0]!=i.getPos() && state.registers[2]!=0) {logger.debug("case 2");logger.debug(state.registers[0]);logger.debug(i.getPos());return false; }// gene is on, start in middle of gene , not the read first Start
 				        	 state.registers[3]=1;
 				        	 state.registers[2]=i.getPos();
 				        	 break;
-				           }
-					
 				case TuringCodeBook.BLOCK_END:
-				          {
 				        	 logger.info("read block end"); 
 				        	if(state.registers[1]==1) {logger.debug("case 3");return false;} //gene is on but end a read block and the block is not the last block.
 				        	if(state.registers[1]==0 && state.registers[0]!=i.getPos()) {logger.debug("case 4");return false;} //gene is off, but earlier than read. 
 					        state.registers[3]=0;
 			        	    state.registers[2]=i.getPos();
 					        break;
-				           }
 				case TuringCodeBook.END: //END has prioroty .
 					logger.info("read END");
 					if(state.registers[1]==1) return true;
 					if(state.registers[1]==0 && state.registers[0]==i.getPos()) return true;
 					break;
 				} 
-				 
 				break;
-	   }	
-
 		}//CODE
 
 		}//FOR

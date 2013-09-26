@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 
+
 import net.sf.samtools.AlignmentBlock;
 import net.sf.samtools.SAMRecord;
 import net.sf.samtools.util.CloseableIterator;
@@ -120,6 +121,10 @@ public class TuringCodes implements Iterable<TuringCode>{
 		
 	}
 	
-
+	
 
 }
+
+
+
+

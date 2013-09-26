@@ -109,14 +109,15 @@ protected int doWork() {
 			   
 			   if (lab.mg.turing.Utils.compatibleWithGene(a, sam))
 			   {
-				   out.println("CT\t");
+				   out.print("CP\t");
 				   out.println(Arrays.toString(lab.mg.turing.Utils.translateToGeneCoordinates(sam, a)));
-				   out.print(sam.getSAMString());
+				   //out.print(sam.getSAMString());
 			   }
 			   else
 			   {
 				   out.print("NC\t");
-				   out.print(sam.getSAMString());
+				   out.println(Arrays.toString(lab.mg.turing.Utils.translateToGeneCoordinates(sam, a)));
+				   //out.print(sam.getSAMString());
 			   }
 		   }
 		   iter.close();

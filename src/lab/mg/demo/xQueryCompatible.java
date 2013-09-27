@@ -18,6 +18,7 @@ import lab.mg.IO.Reader;
 import net.sf.picard.cmdline.CommandLineProgram;
 import net.sf.picard.cmdline.Option;
 import net.sf.picard.cmdline.Usage;
+import net.sf.samtools.AlignmentBlock;
 import net.sf.samtools.SAMRecord;
 import net.sf.samtools.util.CloseableIterator;
 import nextgen.core.annotation.Annotation;
@@ -110,13 +111,19 @@ protected int doWork() {
 			   if (lab.mg.turing.Utils.compatibleWithGene(a, sam))
 			   {
 				   out.print("CP\t");
-				   out.println(Arrays.toString(lab.mg.turing.Utils.translateToGeneCoordinates(sam, a)));
-				   //out.print(sam.getSAMString());
+				   out.print(Arrays.toString(lab.mg.turing.Utils.translateToGeneCoordinates(sam, a)));
+				   out.println(sam.getCigarString());
+				   for(AlignmentBlock b: sam.getAlignmentBlocks())
+				   {
+					   out.println(b.getReferenceStart());
+					   out.println(b.getReferenceStart()+b.getLength());
+				   }
 			   }
 			   else
 			   {
 				   out.print("NC\t");
-				   out.println(Arrays.toString(lab.mg.turing.Utils.translateToGeneCoordinates(sam, a)));
+				   out.print(Arrays.toString(lab.mg.turing.Utils.translateToGeneCoordinates(sam, a)));
+				   out.println(sam.getCigarString());
 				   //out.print(sam.getSAMString());
 			   }
 		   }

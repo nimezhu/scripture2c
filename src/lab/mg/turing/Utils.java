@@ -243,7 +243,7 @@ public static boolean overlapCompatible(Annotation bedA, Annotation bedB)
 
 private static boolean overlapCompatible(TuringCodes turingCodes)
 {
-	logger.setLevel(Level.DEBUG);
+	logger.setLevel(Level.WARN);
 	TuringState state = new  TuringState(0,0,new int[16]);
 	/**
 	 *   A SIMPLE Compatible Turing Machine First Try

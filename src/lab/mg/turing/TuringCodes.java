@@ -31,6 +31,12 @@ public class TuringCodes implements Iterable<TuringCode>{
 	
 	//private TuringState turingState;
 	int dataCode=0;
+	public TuringCodes()
+	{
+		super();
+		chr2tid=new HashMap<String,Integer>();
+		this.sortingArray = SortingCollection.newInstance(TuringCode.class, new TuringCodec(), new TuringCodeComparator(), MAX_NUM , tmpDir);
+	}
 	
 	
     public TuringCodes(HashMap<String,Integer> chr2tid) {
@@ -79,7 +85,6 @@ public class TuringCodes implements Iterable<TuringCode>{
 	
 	public void add(Annotation a, int dataCode)
 	{
-		
 		 TuringCode  start=new TuringCode(chr2tid.get(a.getChr()),a.getStart(),TuringCodeBook.START, dataCode);
 		 TuringCode  stop= new TuringCode(chr2tid.get(a.getChr()),a.getEnd(),TuringCodeBook.END, dataCode);
 		 //improve for blocks!

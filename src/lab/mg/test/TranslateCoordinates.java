@@ -1,5 +1,5 @@
 
-package lag.mg.test;
+package lab.mg.test;
 
 import java.io.File;
 import java.io.IOException;

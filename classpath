@@ -9,5 +9,7 @@
 	<classpathentry kind="lib" path="lib/sam-1.89.jar"/>
 	<classpathentry kind="lib" path="lib/tribble-1.84.jar"/>
 	<classpathentry kind="lib" path="/scriptureV2/lib/commons-math3-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/BigWig.jar"/>
+	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.7.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,0 +1,25 @@
+# Compiled source #
+###################
+*.class
+build
+bin
+
+#config Files #
+###############
+.classpath
+.project
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Trashes
+ehthumbs.db
+Thumbs.db

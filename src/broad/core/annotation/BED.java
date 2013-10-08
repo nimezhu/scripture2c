@@ -215,7 +215,7 @@ public class BED extends BasicGenomicAnnotation {
 	public void addBlock(String name, int start, int end) {
 		int adjustedStart = start - getStart();
 		int length = end -start;
-		System.err.print("Mapped region: " + getLocationString() + "(" + getOrientation() + ") adding " + name + " " + start + "-" + end);
+		//System.err.print("Mapped region: " + getLocationString() + "(" + getOrientation() + ") adding " + name + " " + start + "-" + end);
 		if(blockSizeStarts == null || blockSizeStarts.length == 0) {
 			blockSizeStarts = new int[1][2];
 			blockSizeStarts[0][0] = length;
@@ -235,7 +235,7 @@ public class BED extends BasicGenomicAnnotation {
 					newBlockSizes[j][0] = length;
 					newBlockSizes[j][1] = adjustedStart;	
 					newAdded = true;
-					System.err.print(" added at idx " + j);
+					//System.err.print(" added at idx " + j);
 					j++;
 				}
 			}
@@ -245,7 +245,7 @@ public class BED extends BasicGenomicAnnotation {
 			} 
 			blockSizeStarts  = newBlockSizes;
 		}
-		System.err.println(" first block start " + blockSizeStarts[0][1]);
+		//System.err.println(" first block start " + blockSizeStarts[0][1]);
 	}
 
 	public boolean mayHaveBlocks() {
@@ -266,6 +266,15 @@ public class BED extends BasicGenomicAnnotation {
 		}
 		
 		return false;
+	}
+
+	public int getSplicedLength() {
+		Iterator<GenomicAnnotation> it = getBlocks().iterator();
+		int l = 0;
+		while (it.hasNext()) {
+			l += it.next().length();
+		}
+		return l;
 	}
 
 
